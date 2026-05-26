@@ -1,0 +1,7 @@
+.git
+.gitignore
+*.md
+LICENSE
+elvish-quest-www
+server
+.cursor

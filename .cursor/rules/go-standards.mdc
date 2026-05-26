@@ -1,0 +1,51 @@
+---
+description: Go idioms, web architecture, errors, security, and testing
+globs: **/*.go
+alwaysApply: false
+---
+
+# Go Standards
+
+## Output
+
+- When the user needs a copy-pasteable file (e.g. “give me the full file”), output the **entire** file with no omissions (`// ...`, partial diffs, or “rest unchanged”).
+- Otherwise prefer focused edits via the editor; brief high-level notes before code are enough—avoid long tutorials.
+
+## Idioms & Style
+
+- Run through `gofmt` / `goimports`. Prefer simple, idiomatic Go over patterns from other languages (deep inheritance, heavy DI frameworks).
+- **Naming:** `MixedCaps` for exported identifiers; short names in small scopes (`i`, `r`, `w` in loops/handlers). Interfaces are often `-er` names (`Reader`, `Handler`). Every exported name needs a doc comment on the line above.
+- **Layout:** binaries in `cmd/`, app-private code in `internal/`, reusable libs in `pkg/` when sharing across modules.
+
+## Web & HTTP
+
+- Prefer **stdlib** (`net/http`, `http.ServeMux` with Go 1.22+ path/method patterns) or light routers (`chi`). Match what the repo already uses; do not introduce heavy frameworks without reason.
+- Inject dependencies (DB, cache, logger) via structs or closures—**no globals** for runtime services.
+- Pass `context.Context` as the **first** parameter on I/O, DB, and outbound HTTP; honor deadlines and cancellation.
+
+## Errors
+
+```go
+// ❌ ignore or panic for expected failures
+_ = db.Close()
+panic(err)
+
+// ✅ explicit check and wrap with context
+if err := db.Close(); err != nil {
+    return fmt.Errorf("close db: %w", err)
+}
+```
+
+- Reserve `panic` for programmer bugs or fatal startup (e.g. misconfiguration). Do not use `recover` for normal control flow.
+- Log full errors server-side; return **generic** messages to clients (no stack traces, SQL, or internal paths).
+
+## Security & Concurrency
+
+- Use parameterized queries / prepared statements—never string-concatenate user input into SQL.
+- Load secrets from environment (or a secret store), never from source.
+- Every goroutine must have a clear exit (context cancel, `WaitGroup`, bounded worker pool). Protect shared mutable state with `sync.Mutex` / `sync.RWMutex` or confine data to one goroutine.
+
+## Tests
+
+- Table-driven tests with `testing` and `t.Run` for branches and edge cases.
+- Tests live beside production code (`foo_test.go`); use `package foo` or `package foo_test` deliberately (export vs black-box).
