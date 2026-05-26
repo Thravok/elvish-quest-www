@@ -4,6 +4,8 @@
 # Project binary
 /elvish-quest-www
 /server
+/tmp/
+build-errors.log
 
 # Binaries for programs and plugins
 *.exe

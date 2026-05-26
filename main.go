@@ -37,8 +37,8 @@ var tools = []Tool{
 		ID:          "redlib",
 		Name:        "Redlib",
 		Description: "A private gateway to Reddit's realms, free from trackers and the burden of accounts.",
-		URL:         "#",
-		TorURL:      "",
+		URL:         "", // set clearnet URL when deployed, e.g. https://redlib.example.com
+		TorURL:      "", // set .onion URL when available
 		Action:      "Enter the Archive",
 		TorAction:   "Tor Access",
 	},
@@ -46,7 +46,7 @@ var tools = []Tool{
 		ID:          "wikiless",
 		Name:        "Wikiless",
 		Description: "The great library of knowledge, veiled from prying eyes. Wikipedia, liberated.",
-		URL:         "#",
+		URL:         "",
 		TorURL:      "",
 		Action:      "Seek Knowledge",
 		TorAction:   "Tor Access",
@@ -55,8 +55,8 @@ var tools = []Tool{
 		ID:          "searxng",
 		Name:        "SearXNG",
 		Description: "A metasearch oracle that queries many sources while shielding your identity from all.",
-		URL:         "#",
-		TorURL:      "",
+		URL:         "",
+		TorURL:      "", // e.g. http://searx....onion
 		Action:      "Begin Search",
 		TorAction:   "Tor Access",
 	},
@@ -64,7 +64,7 @@ var tools = []Tool{
 		ID:          "whoogle",
 		Name:        "Whoogle",
 		Description: "Google's vast knowledge, stripped of its surveillance. Results without the watching.",
-		URL:         "#",
+		URL:         "",
 		TorURL:      "",
 		Action:      "Search Freely",
 		TorAction:   "Tor Access",
@@ -151,7 +151,7 @@ func securityHeaders(next http.Handler) http.Handler {
 		csp := "default-src 'self'; " +
 			"style-src 'self'; " +
 			"font-src 'self'; " +
-			"script-src 'self' 'sha256-b4ifVwxxZQWpo+N5c8n66dE2OkmzeoN/3Oadwsgrhzo='; " +
+			"script-src 'self' 'sha256-E2R/YbsbrAICx7FLw7KAday2OnDuTO8Sm8GKrPiZJ+g='; " +
 			"img-src 'self' data:; " +
 			"base-uri 'self'; " +
 			"form-action 'self'"

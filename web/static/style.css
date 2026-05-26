@@ -591,6 +591,20 @@ body {
   opacity: 1;
 }
 
+.artifact-link--unconfigured {
+  cursor: default;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.artifact-link--unconfigured.artifact-link--primary {
+  border-style: dashed;
+}
+
+.artifact-link--unconfigured.artifact-link--tor {
+  border-style: dashed;
+}
+
 /* ═══════════════════════════════════════════
    PHILOSOPHY SECTION
    ═══════════════════════════════════════════ */

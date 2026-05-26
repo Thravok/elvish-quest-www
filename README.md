@@ -6,14 +6,19 @@ This repository is a minimal static site served by a single Go binary with embed
 
 ## Local development
 
-Requires Go 1.23+.
+Requires Go 1.23+. You do **not** need Docker for local work—just run the binary directly.
 
 ```bash
-make run
+make dev    # live reload on changes (templates, CSS, Go)
+make run    # single run, no watcher
 # or: go run .
 ```
 
-Open [http://localhost:8080](http://localhost:8080). Health check: [http://localhost:8080/health](http://localhost:8080/health).
+Open [http://localhost:8080](http://localhost:8080) (not a file in `web/` — the page is rendered by Go). Hard-refresh with `Cmd+Shift+R` if it looks stale.
+
+Health check: [http://localhost:8080/health](http://localhost:8080/health).
+
+Tool cards show **two** buttons per service (gold clearnet + purple Tor). Until you set `URL` / `TorURL` in `main.go`, they appear dashed and inactive. Purple Tor buttons only become clickable links when `TorURL` is set.
 
 Build a binary:
 
@@ -24,7 +29,9 @@ make build
 
 Set `PORT` to change the listen port (default `8080`).
 
-## Docker
+## Docker (deployment)
+
+Use Docker when you want a container image for production or your host (Coolify, etc.). For day-to-day development on your machine, use `make run` above.
 
 Build and run:
 

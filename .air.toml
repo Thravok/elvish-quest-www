@@ -1,0 +1,23 @@
+# Live reload for local development (make dev)
+# https://github.com/air-verse/air
+
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o ./tmp/main ."
+  entrypoint = "./tmp/main"
+  delay = 300
+  include_ext = ["go", "gohtml", "css", "svg", "txt", "xml"]
+  exclude_dir = ["tmp", "vendor", ".git", "node_modules"]
+  exclude_regex = ["_test\\.go$"]
+  send_interrupt = true
+  kill_delay = 500
+  poll = true
+  poll_interval = 500
+
+[log]
+  time = false
+
+[misc]
+  clean_on_exit = true
